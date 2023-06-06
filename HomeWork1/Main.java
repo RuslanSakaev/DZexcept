@@ -1,3 +1,5 @@
+package HomeWork1;
+
 public class Main {
     public static void main(String[] args) {
         //int[] array1 = {5, 2, 7, 6};
