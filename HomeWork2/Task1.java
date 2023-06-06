@@ -2,7 +2,7 @@ package HomeWork2;
 
 import java.util.Scanner;
 
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         float number = readFloatFromUser();
         System.out.println("Введенное число: " + number);

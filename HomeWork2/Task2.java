@@ -62,36 +62,35 @@ public class Example {
 
 import java.util.Scanner;
 
-public class Example {
+public class Task2 {
     public static void main(String[] args) {
-        int[] intArray = {1, 2, 3, 4, 5, 6, 7};
-
+        int[] intArray = {3534, 44, 689, 9065, -3636, -334, 34, 7};
         Scanner scanner = new Scanner(System.in);
-        int index;
-        int d;
+
+        boolean validInput = false;
+        int index = 0;
+        double d = 0;
         double res = 0;
 
-        do {
+        while (!validInput) {
             try {
                 System.out.print("Введите индекс массива: ");
                 index = scanner.nextInt();
-
-                System.out.print("Введите значение d: ");
-                d = scanner.nextInt();
+                System.out.print("Введите значение переменной d: ");
+                d = scanner.nextDouble();
 
                 res = intArray[index] / d;
-
-                System.out.println("res = " + res);
+                validInput = true;
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Значение индекса выходит за пределы массива. Пожалуйста, попробуйте снова.");
-                scanner.nextLine(); // Очистка буфера ввода
+                System.out.println("Индекс выходит за пределы массива. Попробуйте снова.");
             } catch (ArithmeticException e) {
-                System.out.println("Невозможно разделить на ноль. Пожалуйста, попробуйте снова.");
+                System.out.println("Деление на ноль. Попробуйте снова.");
+            } catch (Exception e) {
+                System.out.println("Неверный ввод. Попробуйте снова.");
                 scanner.nextLine(); // Очистка буфера ввода
             }
-        } while (res == 0);
+        }
 
-        scanner.close();
+        System.out.println("res = " + res);
     }
 }
-
