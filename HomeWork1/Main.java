@@ -1,21 +1,27 @@
 package HomeWork1;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        //int[] array1 = {5, 2, 7, 6};
-        int[] array1 = {5, 2, 7};
-        int[] array2 = {4, 5, 6};
+        int[] array1 = {10, 20, 30, 40};
+        int[] array2 = {2, 5, 0, 4};
 
         try {
-            double[] result = ArrayDivider.divideArrays(array1, array2);
-            for (double value : result) {
-                System.out.println(value);
-            }
+            int[] result = divideArrays(array1, array2);
+            System.out.println("Результат: " + Arrays.toString(result));
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ошибка: " + e.getMessage());
         }
     }
+
+    public static int[] divideArrays(int[] array1, int[] array2) {
+        // Реализация метода divideArrays из предыдущего ответа
+        return array1;
+    }
 }
+
+
 /*
 Cоздаем два целочисленных массива array1 и array2,
 вызываем метод divideArrays и обрабатываем исключение RuntimeException, если длины массивов не равны.
