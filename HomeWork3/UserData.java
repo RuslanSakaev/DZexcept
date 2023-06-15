@@ -1,20 +1,34 @@
 package HomeWork3;
 
 public class UserData {
-    private final String fullName;
-    private final String dateOfBirth;
-    private final String phoneNumber;
-    private final String gender;
+    private String lastName;
 
-    public UserData(String fullName, String dateOfBirth, String phoneNumber, String gender) {
-        this.fullName = fullName;
+    private String firstName;
+
+    private String middleName;
+    private String dateOfBirth;
+    private String phoneNumber;
+    private String gender;
+
+    public UserData(String lastName, String firstName, String middleName, String dateOfBirth, String phoneNumber, String gender) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
     }
 
     public String getDateOfBirth() {
@@ -29,9 +43,4 @@ public class UserData {
         return gender;
     }
 
-    public String getLastName() {
-        // Assuming the last name is at the beginning of the full name
-        String[] nameParts = fullName.split(" ");
-        return nameParts[0];
-    }
 }

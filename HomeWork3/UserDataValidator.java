@@ -1,47 +1,54 @@
 package HomeWork3;
 
-public class UserDataValidator {
-    public UserData validate(String userInput) {
-        String[] userData = userInput.split(" ");
+import java.util.regex.Pattern;
 
-        if (userData.length != 4) {
-            throw new IllegalArgumentException("Неверное количество данных!");
+public class UserDataValidator {
+
+    public void validateFullName(String fullName, String fieldName) {
+        String regex = "^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+$";
+        if (fullName == null || !Pattern.matches(regex, fullName.trim())) {
+            throw new IllegalArgumentException(fieldName + " имеет неверный формат.");
+        }
+    }
+    public UserData parseUserInput(String userInput) {
+        String[] data = userInput.split(" ");
+
+        if (data.length != 6) {
+            throw new IllegalArgumentException("Неверное количество данных. Ожидается 6 элементов.");
         }
 
-        String fullName = userData[0];
-        String dateOfBirth = userData[1];
-        String phoneNumber = userData[2];
-        String gender = userData[3];
+        String lastName = data[0];
+        String firstName = data[1];
+        String middleName = data[2];
+        String dateOfBirth = data[3];
+        String phoneNumber = data[4];
+        String gender = data[5];
 
-        validateFullName(fullName);
+        validateFullName(lastName, "Фамилия");
+        validateFullName(firstName, "Имя");
+        validateFullName(middleName, "Отчество");
         validateDateOfBirth(dateOfBirth);
         validatePhoneNumber(phoneNumber);
         validateGender(gender);
 
-        return new UserData(fullName, dateOfBirth, phoneNumber, gender);
-    }
-
-    private void validateFullName(String fullName) {
-        if (!fullName.matches("^[а-яА-ЯёЁa-zA-Z]+[а-яА-ЯёЁa-zA-Z]+[а-яА-ЯёЁa-zA-Z]+$")) {
-            throw new IllegalArgumentException("Некорректное ФИО!");
-        }
+        return new UserData(lastName, firstName, middleName, dateOfBirth, phoneNumber, gender);
     }
 
     private void validateDateOfBirth(String dateOfBirth) {
         if (!dateOfBirth.matches("^\\d{2}\\.\\d{2}\\.\\d{4}$")) {
-            throw new IllegalArgumentException("Некорректная дата рождения!");
+            throw new IllegalArgumentException("Неверный формат даты рождения. Ожидается dd.mm.yyyy.");
         }
     }
 
     private void validatePhoneNumber(String phoneNumber) {
         if (!phoneNumber.matches("^\\d+$")) {
-            throw new IllegalArgumentException("Некорректный номер телефона!");
+            throw new IllegalArgumentException("Неверный формат номера телефона. Ожидается целое число без форматирования.");
         }
     }
 
     private void validateGender(String gender) {
         if (!gender.matches("^[fm]$")) {
-            throw new IllegalArgumentException("Некорректный пол!");
+            throw new IllegalArgumentException("Неверный формат пола. Ожидается символ латиницей f или m.");
         }
     }
 }

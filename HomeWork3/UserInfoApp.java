@@ -1,5 +1,6 @@
 /*
-Напишите приложение, которое будет запрашивать у пользователя следующие данные в произвольном порядке, разделенные пробелом:
+Напишите приложение, которое будет запрашивать у пользователя следующие данные в произвольном порядке,
+разделенные пробелом:
 ФИО, дата рождения, номер телефона, пол
 
 Форматы данных:
@@ -34,17 +35,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+
 public class UserInfoApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите ФИО, дату рождения, номер телефона и пол через пробел: ");
+        System.out.print("Введите данные в произвольном порядке, разделенные пробелом (Фамилия Имя Отчество Дата_рождения Номер_телефона Пол): ");
         String userInput = scanner.nextLine();
 
         UserDataValidator validator = new UserDataValidator();
 
         try {
-            UserData userData = validator.validate(userInput);
+            UserData userData = validator.parseUserInput(userInput);
             System.out.println("Все данные корректны. Сохранение информации...");
 
             String fileName = userData.getLastName() + ".txt";
@@ -55,16 +57,17 @@ public class UserInfoApp {
             System.out.println("Ошибка: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Ошибка при сохранении данных: " + e.getMessage());
+            e.printStackTrace();
         }
 
         scanner.close();
     }
 
     private static void saveUserDataToFile(UserData userData, String fileName) throws IOException {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            String dataLine = userData.getFullName() + " " + userData.getDateOfBirth() + " " +
-                    userData.getPhoneNumber() + " " + userData.getGender();
-            writer.write(dataLine);
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+            String dataLine = userData.getLastName() + " " + userData.getFirstName() + " " + userData.getMiddleName() + " " +
+                    userData.getDateOfBirth() + " " + userData.getPhoneNumber() + " " + userData.getGender();
+            writer.write(dataLine + "\n");
         }
     }
 }
