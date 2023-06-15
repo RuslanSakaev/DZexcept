@@ -30,6 +30,8 @@
 
 package HomeWork3;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UserInfoApp {
@@ -39,67 +41,30 @@ public class UserInfoApp {
         System.out.print("Введите ФИО, дату рождения, номер телефона и пол через пробел: ");
         String userInput = scanner.nextLine();
 
-        String[] userData = userInput.split(" ");
+        UserDataValidator validator = new UserDataValidator();
 
-        if (userData.length != 4) {
-            System.out.println("Ошибка: неверное количество данных!");
-            return;
+        try {
+            UserData userData = validator.validate(userInput);
+            System.out.println("Все данные корректны. Сохранение информации...");
+
+            String fileName = userData.getLastName() + ".txt";
+            saveUserDataToFile(userData, fileName);
+
+            System.out.println("Данные сохранены в файл " + fileName);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении данных: " + e.getMessage());
         }
-
-        String fullName = userData[0];
-        String dateOfBirth = userData[1];
-        String phoneNumber = userData[2];
-        String gender = userData[3];
-
-        if (!isValidFullName(fullName)) {
-            System.out.println("Ошибка: некорректное ФИО!");
-            return;
-        }
-
-        if (!isValidDateOfBirth(dateOfBirth)) {
-            System.out.println("Ошибка: некорректная дата рождения!");
-            return;
-        }
-
-        if (!isValidPhoneNumber(phoneNumber)) {
-            System.out.println("Ошибка: некорректный номер телефона!");
-            return;
-        }
-
-        if (!isValidGender(gender)) {
-            System.out.println("Ошибка: некорректный пол!");
-            return;
-        }
-
-        System.out.println("Все данные корректны. Сохранение информации...");
-
-        // добавить код для сохранения информации
 
         scanner.close();
     }
 
-    private static boolean isValidFullName(String fullName) {
-        // Проверка на соответствие формату ФИО
-        // добавить логику проверки
-        return true;
-    }
-
-    private static boolean isValidDateOfBirth(String dateOfBirth) {
-        // Проверка на соответствие формату даты рождения
-        // добавить логику проверки
-        return true;
-    }
-
-    private static boolean isValidPhoneNumber(String phoneNumber) {
-        // Проверка на соответствие формату номера телефона
-        // добавить логику проверки
-        return true;
-    }
-
-    private static boolean isValidGender(String gender) {
-        // Проверка на соответствие формату пола
-        // добавить логику проверки
-        return true;
+    private static void saveUserDataToFile(UserData userData, String fileName) throws IOException {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            String dataLine = userData.getFullName() + " " + userData.getDateOfBirth() + " " +
+                    userData.getPhoneNumber() + " " + userData.getGender();
+            writer.write(dataLine);
+        }
     }
 }
-
