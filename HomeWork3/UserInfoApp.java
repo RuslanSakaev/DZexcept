@@ -35,7 +35,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 public class UserInfoApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -56,7 +55,7 @@ public class UserInfoApp {
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("Ошибка при сохранении данных: " + e.getMessage());
+            System.err.println("Ошибка при сохранении данных: " + e.getMessage());
             e.printStackTrace();
         }
 

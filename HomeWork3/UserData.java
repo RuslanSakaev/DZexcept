@@ -2,9 +2,7 @@ package HomeWork3;
 
 public class UserData {
     private String lastName;
-
     private String firstName;
-
     private String middleName;
     private String dateOfBirth;
     private String phoneNumber;
@@ -42,5 +40,4 @@ public class UserData {
     public String getGender() {
         return gender;
     }
-
 }
