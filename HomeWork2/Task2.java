@@ -59,6 +59,9 @@ public class Example {
  */
 // Но можно доработат код и выводить соответвующее сообщение о неверном вводе до тех пор,
 // пока не будут ввдены валидные значения.
+// Что бы избежать использования блока try-catch буду использовать условные операторы if для проверки ошибок.
+// Для проверки правильности ввода индекса массива и значения d использую циклы while.
+// Регулярное выражение \\d+ буду использовать для проверки, что введенное значение состоит только из цифр.
 
 import java.util.Scanner;
 
@@ -67,30 +70,42 @@ public class Task2 {
         int[] intArray = {3534, 44, 689, 9065, -3636, -334, 34, 7};
         Scanner scanner = new Scanner(System.in);
 
-        boolean validInput = false;
-        int index = 0;
-        double d = 0;
-        double res = 0;
+        int index = -1;
+        double catchedRes1 = 0;
 
-        while (!validInput) {
-            try {
-                System.out.print("Введите индекс массива: ");
-                index = scanner.nextInt();
-                System.out.print("Введите значение переменной d: ");
-                d = scanner.nextDouble();
+        while (true) {
+            System.out.print("Введите индекс массива: ");
+            String input = scanner.nextLine();
 
-                res = intArray[index] / d;
-                validInput = true;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Индекс выходит за пределы массива. Попробуйте снова.");
-            } catch (ArithmeticException e) {
-                System.out.println("Деление на ноль. Попробуйте снова.");
-            } catch (Exception e) {
-                System.out.println("Неверный ввод. Попробуйте снова.");
-                scanner.nextLine(); // Очистка буфера ввода
+            if (input.matches("\\d+")) {
+                index = Integer.parseInt(input);
+                if (index >= 0 && index < intArray.length) {
+                    break; // Введенный индекс верен, выходим из цикла
+                } else {
+                    System.out.println("Неверный индекс массива. Повторите ввод.");
+                }
+            } else {
+                System.out.println("Неверный формат ввода. Введите целое число.");
             }
         }
 
-        System.out.println("res = " + res);
+        while (true) {
+            System.out.print("Введите значение d: ");
+            String input = scanner.nextLine();
+
+            if (input.matches("\\d+")) {
+                int d = Integer.parseInt(input);
+                if (d != 0) {
+                    catchedRes1 = intArray[index] / d;
+                    break; // Значение d верно, выходим из цикла
+                } else {
+                    System.out.println("Значение d должно быть отлично от нуля. Повторите ввод.");
+                }
+            } else {
+                System.out.println("Неверный формат ввода. Введите целое число.");
+            }
+        }
+
+        System.out.println("catchedRes1 = " + catchedRes1);
     }
 }
