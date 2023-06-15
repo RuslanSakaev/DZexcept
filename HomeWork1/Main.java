@@ -16,7 +16,7 @@ public class Main {
     }
 
     public static int[] divideArrays(int[] array1, int[] array2) {
-        // Реализация метода divideArrays из предыдущего ответа
+        // Реализация метода divideArrays
         return array1;
     }
 }
