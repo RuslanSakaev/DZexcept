@@ -38,34 +38,38 @@ import java.util.Scanner;
 public class UserInfoApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.print("Введите данные, разделенные пробелом (Фамилия Имя Отчество Дата_рождения Номер_телефона Пол): ");
+                String userInput = scanner.nextLine();
+                UserDataValidator validator = new UserDataValidator();
+                UserData userData = validator.parseUserInput(userInput);
+                System.out.println("Все данные корректны. Сохранение информации...");
 
-        System.out.print("Введите данные в произвольном порядке, разделенные пробелом (Фамилия Имя Отчество Дата_рождения Номер_телефона Пол): ");
-        String userInput = scanner.nextLine();
+                String fileName = userData.getLastName() + ".txt";
+                saveUserDataToFile(userData, fileName);
 
-        UserDataValidator validator = new UserDataValidator();
-
-        try {
-            UserData userData = validator.parseUserInput(userInput);
-            System.out.println("Все данные корректны. Сохранение информации...");
-
-            String fileName = userData.getLastName() + ".txt";
-            saveUserDataToFile(userData, fileName);
-
-            System.out.println("Данные сохранены в файл " + fileName);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Ошибка при сохранении данных: " + e.getMessage());
-            e.printStackTrace();
+                System.out.println("Данные сохранены в файл " + fileName);
+                break; // Выход из цикла при успешном сохранении данных
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Пожалуйста, повторите ввод данных.");
+            } catch (IOException e) {
+                System.err.println("Ошибка при сохранении данных: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
-
-        scanner.close();
+        scanner.close(); // Закрыть сканнер после завершения цикла
     }
 
     private static void saveUserDataToFile(UserData userData, String fileName) throws IOException {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            String dataLine = userData.getLastName() + " " + userData.getFirstName() + " " + userData.getMiddleName() + " " +
-                    userData.getDateOfBirth() + " " + userData.getPhoneNumber() + " " + userData.getGender();
+            String dataLine = userData.getLastName() + " " +
+                    userData.getFirstName() + " " +
+                    userData.getMiddleName() + " " +
+                    userData.getDateOfBirth() + " " +
+                    userData.getPhoneNumber() + " " +
+                    userData.getGender();
             writer.write(dataLine + "\n");
         }
     }
